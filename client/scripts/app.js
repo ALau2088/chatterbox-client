@@ -9,19 +9,31 @@ var App = {
 
     FormView.initialize();
     RoomsView.initialize();
-    MessagesView.initialize();
 
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
+    //App.fetch(MessagesView.initialize)
+    MessagesView.initialize();
 
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
-      console.log(data);
 
+      for(let i = 0; i < data.results.length; i++){
+        var { username, text, roomname} = data.results[i];
+        Messages[i] = {
+          username: username,
+          text: text,
+          roomname: roomname
+        };
+        Rooms[roomname] = roomname;
+      }
+      // $("#")
+      MessagesView.initialize();
+      RoomsView.initialize();
       callback();
     });
   },
