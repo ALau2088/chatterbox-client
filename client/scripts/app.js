@@ -20,8 +20,7 @@ var App = {
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
-      // examine the response from the server request:
-
+      // examine the response from the server request
       for(let i = 0; i < data.results.length; i++){
         var { username, text, roomname} = data.results[i];
         Messages[i] = {
@@ -30,6 +29,8 @@ var App = {
           roomname: roomname
         };
         Rooms[roomname] = roomname;
+        // Add friend to Friends object
+        Friends[username] = false;
       }
       // $("#")
       MessagesView.initialize();

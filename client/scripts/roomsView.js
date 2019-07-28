@@ -4,28 +4,15 @@ var RoomsView = {
   $select: $('#rooms select'),
 
   initialize: function() {
-    RoomsView.$button.on('click', RoomsView.handleSubmit);
-    RoomsView.$select.on('change', RoomsView.renderRoom)
+    RoomsView.$button.unbind('click').bind('click', Rooms.add);
+    RoomsView.$select.on('change', RoomsView.render)
     for ( var key in Rooms){
-      RoomsView.render(Rooms[key])
+      RoomsView.renderRoom(Rooms[key])
     }
     //RoomsView.renderRoom();
   },
 
-  handleSubmit: function(event) {
-    event.preventDefault();
-
-    var roomname =  $('#roomname').val() ;
-
-    RoomsView.render(roomname);
-  },
-
-  render: function(roomname) {
-    RoomsView.$select.append(`<option value =${roomname} >${roomname}</option>`)
-  },
-
-  renderRoom: function() {
-
+  render: function() {
     // TODO: Switch render and renderRoom
     var currentRoom = RoomsView.$select.val()
     $('#chats').empty();
@@ -40,7 +27,11 @@ var RoomsView = {
 
 
     MessagesView.$chats.append(html);
+  },
 
+  renderRoom: function(roomname) {
+    RoomsView.$select.append(`<option value =${roomname} >${roomname}</option>`);
+    console.log('new room created')
   }
 
 };
